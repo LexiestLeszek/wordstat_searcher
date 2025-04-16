@@ -22,17 +22,17 @@ def generate_initial_keywords(product_description):
     Use an LLM to generate potential search queries based on product description.
     """
     system_prompt = """
-    You are a keyword research expert for Yandex search in Russia.
-    Generate potential search queries that users might use when looking for the described product.
-    Focus on problem-based keywords that reflect user needs and pain points.
-    Return only a Python list of strings with these search queries.
+    Вы эксперт по исследованию ключевых слов для поисковой системы Yandex в России.
+    Генерируйте потенциальные поисковые запросы, которые пользователи могут использовать при поиске описанного продукта.
+    Сфокусируйтесь на проблемно-ориентированных ключевых словах, отражающих потребности и болевые точки пользователей.
+    Возвращайте только Python-список строк с этими поисковыми запросами.
     """
-    
+
     user_prompt = f"""
-    Generate 15 potential search queries for this product: "{product_description}"
-    Focus on problems the product might solve and how Russian users would search for such solutions.
-    Include a mix of broad and specific terms.
-    Return only the list of keywords in this format: ["keyword 1", "keyword 2", "keyword 3"]
+    Сгенерируйте 15 потенциальных поисковых запросов для этого продукта: "{product_description}"
+    Сфокусируйтесь на проблемах, которые может решать продукт, и том, как российские пользователи искали бы такие решения.
+    Включите сочетание общих и специфичных терминов.
+    Верни только список ключевых слов в формате: ["ключевое слово 1", "ключевое слово 2", "ключевое слово 3"]
     """
     
     response = ask_llm(user_prompt, system_prompt)
@@ -158,24 +158,24 @@ def expand_keywords_with_llm(current_results, product_description):
     Generate additional keywords based on current results.
     """
     system_prompt = """
-    You are a keyword research expert for Yandex search in Russia.
-    Analyze the current keyword results and suggest additional search queries to investigate.
-    Focus on identifying gaps in the keyword list and suggesting new problem-based terms.
-    Return only a Python list of additional search queries.
+    Вы эксперт по исследованию ключевых слов для поисковой системы Yandex в России.
+    Проанализируйте текущие результаты по ключевым словам и предложите дополнительные поисковые запросы для изучения.
+    Сфокусируйтесь на выявлении пробелов в текущем списке ключевых слов и предложении новых проблемно-ориентированных терминов.
+    Возвращайте только Python-список дополнительных поисковых запросов.
     """
-    
+
     user_prompt = f"""
-    Based on this product description: "{product_description}"
-    
-    And these current keyword results:
+    На основе этого описания продукта: "{product_description}"
+
+    И текущих результатов по ключевым словам:
     {json.dumps(current_results, ensure_ascii=False, indent=2)}
-    
-    Generate 10 additional search queries that:
-    1. Are not already in the list
-    2. Address different user needs or problems
-    3. Use different phrasings and terminology
-    
-    Return only the list in this format: ["keyword 1", "keyword 2"]
+
+    Сгенерируйте 10 дополнительных поисковых запросов, которые:
+    1. Ещё отсутствуют в текущем списке
+    2. Охватывают различные потребности или проблемы пользователей
+    3. Используют разные формулировки и терминологию
+
+    Верни только Python список новых поисковых запросов без пояснений вот в таком формате: ["ключевое слово 1", "ключевое слово 2", "ключевое слово 3"]
     """
     
     response = ask_llm(user_prompt, system_prompt)
